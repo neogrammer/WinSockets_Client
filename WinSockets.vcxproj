@@ -136,6 +136,13 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\font1.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\textures\ball.png" />
+    <Image Include="assets\textures\paddle.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

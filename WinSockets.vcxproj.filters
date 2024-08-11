@@ -3,4 +3,28 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Filter Include="assets">
+      <UniqueIdentifier>{0a19a075-dd7e-458d-bd47-8ebf5d55d2a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\fonts">
+      <UniqueIdentifier>{0a20e642-73b3-4441-9ccd-d157b128bd92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\textures">
+      <UniqueIdentifier>{104d5ff6-d25a-4bb7-b405-68621c0bb3e7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\font1.ttf">
+      <Filter>assets\fonts</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\textures\ball.png">
+      <Filter>assets\textures</Filter>
+    </Image>
+    <Image Include="assets\textures\paddle.png">
+      <Filter>assets\textures</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
