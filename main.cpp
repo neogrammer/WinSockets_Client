@@ -310,11 +310,19 @@ void update()
 		//send frame's new updated data
 		int sentBytes = 0;
 		char writeBuffer[4] = { '0','0','0','\0' };
-
+		std::string yPOS = (std::to_string(myData.ypos));
 		char strBfr[4];
 		_itoa_s(myData.ypos, strBfr, _countof(strBfr), 10);
 		size_t len = strnlen(strBfr, _countof(strBfr));
-		if (len < 3)
+		size_t diff = len - yPOS.length();
+		for (size_t i = 0; i < yPOS.length(); i++)
+		{
+			strBfr[i + diff] = yPOS.at(i);
+		}
+		writeBuffer[0] = strBfr[0];
+		writeBuffer[1] = strBfr[1];
+		writeBuffer[2] = strBfr[2];
+		/*if (len < 3)
 		{
 			if (len < 2)
 			{
@@ -343,7 +351,7 @@ void update()
 			writeBuffer[0] = strBfr[0];
 			writeBuffer[1] = strBfr[1];
 			writeBuffer[2] = strBfr[2];
-		}
+		}*/
 
 		sentBytes = send(connSocket, writeBuffer, 4, 0);
 		if (sentBytes == SOCKET_ERROR)
