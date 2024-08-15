@@ -1,10 +1,3 @@
-extern "C"
-{
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
-}
-
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
@@ -247,7 +240,7 @@ int main()
 
 void input()
 {
-	if (gClientID == 1)
+	/*if (gClientID == 1)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		{
@@ -287,7 +280,7 @@ void input()
 		{
 			gDownPressed = false;
 		}
-	}
+	}*/
 }
 
 void update()
