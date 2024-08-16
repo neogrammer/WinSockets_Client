@@ -432,11 +432,11 @@ int main()
 				}
 				else
 				{
-					std::cout << "Client: sent total " << bytesSent << " bytes of 27 bytes sent total" << std::endl;
+					//std::cout << "Client: sent total " << bytesSent << " bytes of 27 bytes sent total" << std::endl;
 
 				}
 			}
-			std::cout << "Client: sent message";
+			//std::cout << "Client: sent message";
 			/*	else
 				{
 					std::cout << "Client: send ok" << WSAGetLastError() << std::endl;
@@ -472,7 +472,7 @@ int main()
 				idx += ret;
 				nLeft -= ret;
 			}
-			std::cout << "Got message from server" << std::endl;
+			std::cout << "Got message from server: " <<  recvbuff << std::endl;
 		}
 
 
