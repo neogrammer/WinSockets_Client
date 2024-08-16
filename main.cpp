@@ -12,7 +12,7 @@
 #include <core/interrelated.h>
 #include <sstream>
 
-const int BFRSZ = 64;
+const int INPUT_BFR_SIZE = 9;
 SOCKADDR_IN ThisSenderInfo;
 //struct PlayerData
 //{
@@ -78,7 +78,7 @@ std::unique_ptr<LayeredBackground> bg1;
 //bool gUpPressed{ false };
 //bool gDownPressed{ false };
 
-void input(ClientFrameInput& data_);
+std::string input();
 void update();
 void render();
 
@@ -418,13 +418,13 @@ int main()
 	while (gWnd.isOpen())
 	{
 		{
-			std::string mystr = "This is a test from client";
+			std::string mystr = input();
 			const char* sendbuf = mystr.c_str();
-			int bytesSent{ 0 }, nlen{ 27 };
+			int bytesSent{ 0 }, nlen{ 9 };
 
-			while (bytesSent < 27)
+			while (bytesSent < 9)
 			{
-				bytesSent = send(connSocket, const_cast<char*>(sendbuf), 27, 0);
+				bytesSent = send(connSocket, const_cast<char*>(sendbuf), 9, 0);
 
 				if (bytesSent == SOCKET_ERROR)
 				{
@@ -456,10 +456,10 @@ int main()
 
 		{
 
-			char recvbuff[27];
+			char recvbuff[15];
 			int ret, nLeft, idx;
 
-			nLeft = 27;
+			nLeft = 15;
 			idx = 0;
 
 			while (nLeft > 0)
@@ -555,41 +555,44 @@ int main()
 	return 0;
 }
 
-void input(ClientFrameInput& data_)
+std::string input()
 {
+	std::string s = "00000000";
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
-		data_.up = true;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	{
-		data_.left = true;
+		s[0] = '1';
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
-		data_.down = true;
+		s[1] = '1';
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{
+		s[2] = '1';
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		data_.right = true;
+		s[3] = '1';
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-		data_.attack = true;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
-	{
-		data_.start = true;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-	{
-		gWnd.close();
+		s[4] = '1';
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
 	{
-		data_.run = true;
+		s[5] = '1';
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+	{
+		s[6] = '1';
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	{
+		s[7] = '1';
+	}
+	return s;
+}
 
 	/*if (gClientID == 1)
 	{
@@ -632,10 +635,11 @@ void input(ClientFrameInput& data_)
 			gDownPressed = false;
 		}
 	}*/
-}
+//}
 
 void update()
 {
+}
 	//// wait for time to update before doing so
 	//if (gElapsed >= (1.f / 60.f))
 	//{
@@ -749,7 +753,7 @@ void update()
 
 	//	// data vals are updated, and can now be drawn 
 	//}
-}
+//}
 
 void render()
 {
