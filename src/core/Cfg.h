@@ -20,7 +20,7 @@ struct Cfg
 
 	// Resource Enums 
 	enum class Textures : int { BG1_1,BG1_2, BG1_3, BG1_4
-		,	Count };
+		, PlayerSheet, Count };
 	enum class Fonts : int {  Count };
 	enum class Music : int { Count };
 	enum class Sounds : int {  Count };

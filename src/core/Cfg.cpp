@@ -40,6 +40,7 @@ void Cfg::initTextures()
 	textures.load((int)Textures::BG1_2, "assets/textures/bgs/bg1/2.png");
 	textures.load((int)Textures::BG1_3, "assets/textures/bgs/bg1/3.png");
 	textures.load((int)Textures::BG1_4, "assets/textures/bgs/bg1/4.png");
+	textures.load((int)Textures::PlayerSheet, "assets/textures/playerSheet2.png");
 
 
 

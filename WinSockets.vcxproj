@@ -151,7 +151,7 @@
     <Image Include="assets\textures\bgs\bg1\3.png" />
     <Image Include="assets\textures\bgs\bg1\4.png" />
     <Image Include="assets\textures\paddle.png" />
-    <Image Include="assets\textures\playerSheet.png" />
+    <Image Include="assets\textures\playerSheet2.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\action\tpl\ActionMap.tpl" />

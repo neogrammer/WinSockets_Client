@@ -36,6 +36,17 @@
 //	int ballYPos{};
 //};
 
+sf::Texture* playerTex{};
+std::map<std::string, std::vector<sf::IntRect> > animMap{};
+std::string currentAnim{"idle"};
+int index = 0;
+sf::Sprite playerSpr{};
+
+sf::Texture* player2Tex{};
+std::map<std::string, std::vector<sf::IntRect> > animMap2{};
+std::string currentAnim2{ "idle" };
+int index2 = 0;
+sf::Sprite player2Spr{};
 
 float gElapsed;
 
@@ -145,8 +156,188 @@ int main()
 			gClientID = atoi(buffer);
 		}
 	}
+	animMap.clear();
 
-	
+	animMap.emplace(std::pair("idle", std::vector<sf::IntRect>{}));
+	animMap["idle"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+		
+		animMap["idle"].push_back({ {i * 96, 0},{96,96} });
+	}
+	animMap.emplace(std::pair("idle2", std::vector<sf::IntRect>{}));
+	animMap["idle2"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap["idle2"].push_back({ {i * 96, 96 * 1},{96,96} });
+	}
+	animMap.emplace(std::pair("idle3", std::vector<sf::IntRect>{}));
+	animMap["idle3"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap["idle3"].push_back({ {i * 96, 96 * 2},{96,96} });
+	}
+	animMap.emplace(std::pair("idle4", std::vector<sf::IntRect>{}));
+	animMap["idle4"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap["idle4"].push_back({ {i * 96, 96 * 3},{96,96} });
+	}
+	animMap.emplace(std::pair("idle5", std::vector<sf::IntRect>{}));
+	animMap["idle5"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap["idle5"].push_back({ {i * 96, 96 * 4},{96,96} });
+	}
+	animMap.emplace(std::pair("idle6", std::vector<sf::IntRect>{}));
+	animMap["idle6"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap["idle6"].push_back({ {i * 96, 96 * 5},{96,96} });
+	}
+	animMap.emplace(std::pair("idle7", std::vector<sf::IntRect>{}));
+	animMap["idle7"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap["idle7"].push_back({ {i * 96, 96 * 6},{96,96} });
+	}
+	animMap.emplace(std::pair("idle8", std::vector<sf::IntRect>{}));
+	animMap["idle8"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap["idle8"].push_back({ {i * 96, 96 * 7},{96,96} });
+	}
+	animMap.emplace(std::pair("idle9", std::vector<sf::IntRect>{}));
+	animMap["idle9"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap["idle9"].push_back({ {i * 96, 96 * 8},{96,96} });
+	}
+
+	animMap.emplace(std::pair("idle10", std::vector<sf::IntRect>{}));
+	animMap["idle10"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap["idle10"].push_back({ {i * 96, 96*9},{96,96} });
+	}
+	animMap.emplace(std::pair("idle11", std::vector<sf::IntRect>{}));
+	animMap["idle11"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap["idle11"].push_back({ {i * 96, 96*10},{96,96} });
+	}
+	playerSpr.setTexture(Cfg::textures.get((int)Cfg::Textures::PlayerSheet));
+	playerSpr.setTextureRect(animMap[currentAnim].at(index));
+	if (gClientID == 1)
+	{
+		playerSpr.setPosition({30.f,700.f});
+	}
+	else
+	{
+		playerSpr.setPosition({ 150.f,700.f });
+
+	}
+
+
+	animMap2.emplace(std::pair("idle", std::vector<sf::IntRect>{}));
+	animMap2["idle"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap2["idle"].push_back({ {i * 96, 0},{96,96} });
+	}
+	animMap2.emplace(std::pair("idle2", std::vector<sf::IntRect>{}));
+	animMap2["idle2"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap2["idle2"].push_back({ {i * 96, 96 * 1},{96,96} });
+	}
+	animMap2.emplace(std::pair("idle3", std::vector<sf::IntRect>{}));
+	animMap2["idle3"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap2["idle3"].push_back({ {i * 96, 96 * 2},{96,96} });
+	}
+	animMap2.emplace(std::pair("idle4", std::vector<sf::IntRect>{}));
+	animMap2["idle4"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap2["idle4"].push_back({ {i * 96, 96 * 3},{96,96} });
+	}
+	animMap2.emplace(std::pair("idle5", std::vector<sf::IntRect>{}));
+	animMap2["idle5"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap2["idle5"].push_back({ {i * 96, 96 * 4},{96,96} });
+	}
+	animMap2.emplace(std::pair("idle6", std::vector<sf::IntRect>{}));
+	animMap2["idle6"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap2["idle6"].push_back({ {i * 96, 96 * 5},{96,96} });
+	}
+	animMap2.emplace(std::pair("idle7", std::vector<sf::IntRect>{}));
+	animMap2["idle7"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap2["idle7"].push_back({ {i * 96, 96 * 6},{96,96} });
+	}
+	animMap2.emplace(std::pair("idle8", std::vector<sf::IntRect>{}));
+	animMap2["idle8"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap2["idle8"].push_back({ {i * 96, 96 * 7},{96,96} });
+	}
+	animMap2.emplace(std::pair("idle9", std::vector<sf::IntRect>{}));
+	animMap2["idle9"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap2["idle9"].push_back({ {i * 96, 96 * 8},{96,96} });
+	}
+
+	animMap2.emplace(std::pair("idle10", std::vector<sf::IntRect>{}));
+	animMap2["idle10"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap2["idle10"].push_back({ {i * 96, 96 * 9},{96,96} });
+	}
+	animMap2.emplace(std::pair("idle11", std::vector<sf::IntRect>{}));
+	animMap2["idle11"].clear();
+	for (int i = 0; i < 11; i++)
+	{
+
+		animMap2["idle11"].push_back({ {i * 96, 96 * 10},{96,96} });
+	}
+	player2Spr.setTexture(Cfg::textures.get((int)Cfg::Textures::PlayerSheet));
+	player2Spr.setTextureRect(animMap2[currentAnim2].at(index2));
+	if (gClientID == 2)
+	{
+		player2Spr.setPosition({ 30.f,700.f });
+	}
+	else
+	{
+		player2Spr.setPosition({ 150.f,700.f });
+
+	}
 
 	// int send ( SOCKET, const char* buf //MESSAGE//, int len //Length of Message Array(individual characters)//, int flags //DEFAULT OK- pass 0//); 
     //  returns number of bytes sent, non-zero is ideal here
@@ -484,6 +675,11 @@ void update()
 void render()
 {
 	bg1->render();
+
+	gWnd.draw(playerSpr);
+	gWnd.draw(player2Spr);
+
+
 	//sf::Sprite playerSpr;
 	//playerSpr = sf::Sprite{};
 	//playerSpr.setPosition({(float)myData.xpos,(float)myData.ypos});

@@ -68,9 +68,6 @@
     <Image Include="assets\textures\paddle.png">
       <Filter>assets\textures</Filter>
     </Image>
-    <Image Include="assets\textures\playerSheet.png">
-      <Filter>assets\textures</Filter>
-    </Image>
     <Image Include="assets\textures\bgs\bg1\1.png">
       <Filter>assets\textures\bgs\bg1</Filter>
     </Image>
@@ -82,6 +79,9 @@
     </Image>
     <Image Include="assets\textures\bgs\bg1\4.png">
       <Filter>assets\textures\bgs\bg1</Filter>
+    </Image>
+    <Image Include="assets\textures\playerSheet2.png">
+      <Filter>assets\textures</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
