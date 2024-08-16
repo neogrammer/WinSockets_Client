@@ -84,7 +84,7 @@ wchar_t* stringToWChar(const std::string& str);
 int main()
 {
 	
-
+	Cfg::Initialize();
 	std::string result;
 	std::cout << "Type in ip address of server: " << std::endl;
 	std::cin >> result;
