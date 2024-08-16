@@ -126,5 +126,11 @@
     <ClInclude Include="src\entities\animation.h">
       <Filter>entities</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\interrelated.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\clientspecific.h">
+      <Filter>core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

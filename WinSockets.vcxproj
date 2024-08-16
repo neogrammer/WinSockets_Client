@@ -164,7 +164,9 @@
     <ClInclude Include="src\action\ActionMap.h" />
     <ClInclude Include="src\action\ActionTarget.h" />
     <ClInclude Include="src\core\Cfg.h" />
+    <ClInclude Include="src\core\clientspecific.h" />
     <ClInclude Include="src\core\globals.h" />
+    <ClInclude Include="src\core\interrelated.h" />
     <ClInclude Include="src\core\rec.h" />
     <ClInclude Include="src\core\ResourceManager.h" />
     <ClInclude Include="src\entities\animation.h" />

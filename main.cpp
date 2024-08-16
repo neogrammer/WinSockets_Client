@@ -8,6 +8,9 @@
 #include <core/globals.h>
 #include <level/LayeredBackground.h>
 #include <memory>
+#include <core/clientspecific.h>
+#include <core/interrelated.h>
+
 //struct PlayerData
 //{
 //	int xpos{};
@@ -61,7 +64,7 @@ std::unique_ptr<LayeredBackground> bg1;
 //bool gUpPressed{ false };
 //bool gDownPressed{ false };
 
-void input();
+void input(ClientFrameInput& data_);
 void update();
 void render();
 
@@ -124,24 +127,24 @@ int main()
 		std::cout << "Can start sending data!" << std::endl;
 	}
 
-	
-	//wait for server to send initial data such as what this clients ID will be for this game session
-	char buffer[2];
-	int byteCount = recv(connSocket, buffer, 2, 0);
-	if (byteCount < 0)
 	{
-		std::cout << "Unable to receive data from server supplying the Client ID for this machine" << std::endl;
-		closesocket(connSocket);
-		WSACleanup();
-		return 0;
-	}
-	else
-	{
-		std::cout << "Data received successfully from server supplying the players Client ID for this machine" << std::endl;
+		//wait for server to send initial data such as what this clients ID will be for this game session
+		char buffer[2];
+		int byteCount = recv(connSocket, buffer, 2, 0);
+		if (byteCount < 0)
+		{
+			std::cout << "Unable to receive data from server supplying the Client ID for this machine" << std::endl;
+			closesocket(connSocket);
+			WSACleanup();
+			return 0;
+		}
+		else
+		{
+			std::cout << "Data received successfully from server supplying the players Client ID for this machine" << std::endl;
 
-		gClientID = atoi(buffer);
+			gClientID = atoi(buffer);
+		}
 	}
-
 
 	
 
@@ -175,6 +178,16 @@ int main()
 	*/// Invariants of game setup are now configured to begin play
 	// example of sending and receiving the objects
 	//  SENDING
+	{
+		ClientFrameInput frameInputData = {};
+		input(frameInputData);
+
+		unsigned long long byteCount = 0Ui64;
+		while (byteCount < sizeof(frameInputData))
+			byteCount = send(connSocket, (char*)&frameInputData, sizeof(frameInputData), 0);
+	}
+	//sent
+	
 	// frameData.ypos = myData.ypos;
 	// byteCount = send(connSocket, (char*)&frameData, sizeof(frameData), 0);
 	// RECEIVING;
@@ -216,19 +229,45 @@ int main()
 			}
 		}
 		// update flags per input signals indicated in this function
-		input();
+		
 
 		// update the whole game world needed for the game portion seen and used
 		gTime = frameTimer.restart().asSeconds();
-		gElapsed += gTime;
-		update();
 
+	
+		{
+			//wait for server to send initial data such as what this clients ID will be for this game session
+			char buffer[2];
+			int byteCount = recv(connSocket, buffer, 2, 0);
+			if (byteCount < 0)
+			{
+				std::cout << "Unable to receive data from server supplying the Client ID for this machine" << std::endl;
+				closesocket(connSocket);
+				WSACleanup();
+				return 0;
+			}
+			else
+			{
+				std::cout << "Data received successfully from server supplying the players Client ID for this machine" << std::endl;
+
+				gClientID = atoi(buffer);
+			}
+		}
 		// rendering of the window
 		gWnd.clear(sf::Color(47, 147, 247, 255));
 
 		render();
 
 		gWnd.display();
+
+		{
+			ClientFrameInput frameInputData = {};
+			input(frameInputData);
+
+			unsigned long long byteCount = 0Ui64;
+			while (byteCount < sizeof(frameInputData))
+				byteCount = send(connSocket, (char*)&frameInputData, sizeof(frameInputData), 0);
+		}
 	}
 
 
@@ -246,8 +285,42 @@ int main()
 	return 0;
 }
 
-void input()
+void input(ClientFrameInput& data_)
 {
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	{
+		data_.up = true;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{
+		data_.left = true;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	{
+		data_.down = true;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{
+		data_.right = true;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		data_.attack = true;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+	{
+		data_.start = true;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	{
+		gWnd.close();
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+	{
+		data_.run = true;
+	}
+
 	/*if (gClientID == 1)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
