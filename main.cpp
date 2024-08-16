@@ -10,7 +10,10 @@
 #include <memory>
 #include <core/clientspecific.h>
 #include <core/interrelated.h>
+#include <sstream>
 
+const int BFRSZ = 64;
+SOCKADDR_IN ThisSenderInfo;
 //struct PlayerData
 //{
 //	int xpos{};
@@ -339,6 +342,7 @@ int main()
 
 	}
 
+
 	// int send ( SOCKET, const char* buf //MESSAGE//, int len //Length of Message Array(individual characters)//, int flags //DEFAULT OK- pass 0//); 
     //  returns number of bytes sent, non-zero is ideal here
 
@@ -368,16 +372,19 @@ int main()
 
 	*/// Invariants of game setup are now configured to begin play
 	// example of sending and receiving the objects
-	//  SENDING
-	{
-		ClientFrameInput frameInputData = {};
-		input(frameInputData);
+	////  SENDING
+	//{
+	//	ClientFrameInput frameInputData = {};
+	//	std::stringstream inputData;
 
-		unsigned long long byteCount = 0Ui64;
-		while (byteCount < sizeof(ClientFrameInput))
-			byteCount = send(connSocket, (char*)&frameInputData, sizeof(ClientFrameInput), 0);
-	}
-	//sent
+	//	inputData.str("1111111");
+	//	input(frameInputData);
+
+	//	unsigned long long byteCount = 0Ui64;
+	//	while (byteCount < sizeof(inputData.width()))
+	//		byteCount = send(connSocket, (char*)&inputData.binary, sizeof(inputData.width()), 0);
+	//}
+	////sent
 	
 	// frameData.ypos = myData.ypos;
 	// byteCount = send(connSocket, (char*)&frameData, sizeof(frameData), 0);
@@ -410,6 +417,65 @@ int main()
 	gElapsed = 0.f;
 	while (gWnd.isOpen())
 	{
+		{
+			std::string mystr = "This is a test from client";
+			const char* sendbuf = mystr.c_str();
+			int bytesSent{ 0 }, nlen{ 27 };
+
+			while (bytesSent < 27)
+			{
+				bytesSent = send(connSocket, const_cast<char*>(sendbuf), 27, 0);
+
+				if (bytesSent == SOCKET_ERROR)
+				{
+					std::cout << "Client: send failed" << WSAGetLastError() << std::endl;
+				}
+				else
+				{
+					std::cout << "Client: sent total " << bytesSent << " bytes of 27 bytes sent total" << std::endl;
+
+				}
+			}
+			std::cout << "Client: sent message";
+			/*	else
+				{
+					std::cout << "Client: send ok" << WSAGetLastError() << std::endl;
+					memset(&ThisSenderInfo, 0, sizeof(ThisSenderInfo));
+					nlen - sizeof(ThisSenderInfo);
+
+					getsockname(connSocket, (SOCKADDR*)&ThisSenderInfo, &nlen);
+
+				}*/
+
+
+
+
+		}
+
+
+
+		{
+
+			char recvbuff[27];
+			int ret, nLeft, idx;
+
+			nLeft = 27;
+			idx = 0;
+
+			while (nLeft > 0)
+			{
+				ret = recv(connSocket, &recvbuff[idx], nLeft, 0);
+				if (ret == SOCKET_ERROR)
+				{
+
+				}
+				idx += ret;
+				nLeft -= ret;
+			}
+			std::cout << "Got message from server" << std::endl;
+		}
+
+
 		// window event handling
 		sf::Event e;
 		while (gWnd.pollEvent(e))
@@ -426,36 +492,36 @@ int main()
 		gTime = frameTimer.restart().asSeconds();
 
 	
-		{
+	//	{
 
-			struct combo
-			{
-				float tmp1x{ 0.f }, tmp1y{ 0.f };
-				float tmp2x{ 0.f }, tmp2y{ 0.f };
-			};
+			//struct combo
+			//{
+			//	float tmp1x{ 0.f }, tmp1y{ 0.f };
+			//	float tmp2x{ 0.f }, tmp2y{ 0.f };
+			//};
 
-			combo data;
-			//wait for server to send initial data such as what this clients ID will be for this game session
+			//combo data;
+			////wait for server to send initial data such as what this clients ID will be for this game session
 	
-			sf::Vector2f tmp1;
+			//sf::Vector2f tmp1;
 
-			int byteCount = recv(connSocket, (char*)&data, sizeof(combo), 0);
-			if (byteCount < 0)
-			{
-				std::cout << "Unable to receive data from server supplying the Client ID for this machine" << std::endl;
-				closesocket(connSocket);
-				WSACleanup();
-				return 0;
-			}
-			else
-			{
-				std::cout << "Data received successfully from server supplying the players Client ID for this machine" << std::endl;
+			//int byteCount = recv(connSocket, (char*)&data, sizeof(combo), 0);
+			//if (byteCount < 0)
+			//{
+			//	std::cout << "Unable to receive data from server supplying the Client ID for this machine" << std::endl;
+			//	closesocket(connSocket);
+			//	WSACleanup();
+			//	return 0;
+			//}
+			//else
+			//{
+			//	std::cout << "Data received successfully from server supplying the players Client ID for this machine" << std::endl;
 
-			}
-			playerSpr.setPosition({ data.tmp1x, data.tmp1y });
-			player2Spr.setPosition({ data.tmp2x, data.tmp2y });
+			//}
+			//playerSpr.setPosition({ data.tmp1x, data.tmp1y });
+			//player2Spr.setPosition({ data.tmp2x, data.tmp2y });
 
-		}
+	//	}
 	
 		// rendering of the window
 		gWnd.clear(sf::Color(47, 147, 247, 255));
@@ -464,14 +530,14 @@ int main()
 
 		gWnd.display();
 
-		{
-			ClientFrameInput frameInputData = {};
-			input(frameInputData);
+		//{
+		//	ClientFrameInput frameInputData = {};
+		//	input(frameInputData);
 
-			unsigned long long byteCount = 0Ui64;
-			while (byteCount < sizeof(ClientFrameInput))
-				byteCount = send(connSocket, (char*)&frameInputData, sizeof(ClientFrameInput), 0);
-		}
+		//	unsigned long long byteCount = 0Ui64;
+		//	while (byteCount < sizeof(ClientFrameInput))
+		///		byteCount = send(connSocket, (char*)&frameInputData, sizeof(ClientFrameInput), 0);
+		//}
 	}
 
 
