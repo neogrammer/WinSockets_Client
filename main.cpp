@@ -430,11 +430,13 @@ int main()
 
 			struct combo
 			{
-				sf::Vector2f tmp1;
-				sf::Vector2f tmp2;
-			} data;
+				float tmp1x{ 0.f }, tmp1y{ 0.f };
+				float tmp2x{ 0.f }, tmp2y{ 0.f };
+			};
+
+			combo data;
 			//wait for server to send initial data such as what this clients ID will be for this game session
-			char buffer[2];
+	
 			sf::Vector2f tmp1;
 
 			int byteCount = recv(connSocket, (char*)&data, sizeof(data), 0);
@@ -450,8 +452,8 @@ int main()
 				std::cout << "Data received successfully from server supplying the players Client ID for this machine" << std::endl;
 
 			}
-			playerSpr.setPosition({ data.tmp1.x, data.tmp1.y });
-			player2Spr.setPosition({ data.tmp2.x, data.tmp2.y });
+			playerSpr.setPosition({ data.tmp1x, data.tmp1y });
+			player2Spr.setPosition({ data.tmp2x, data.tmp2y });
 
 		}
 	
