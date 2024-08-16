@@ -436,6 +436,7 @@ int main()
 			//wait for server to send initial data such as what this clients ID will be for this game session
 			char buffer[2];
 			sf::Vector2f tmp1;
+
 			int byteCount = recv(connSocket, (char*)&data, sizeof(data), 0);
 			if (byteCount < 0)
 			{
