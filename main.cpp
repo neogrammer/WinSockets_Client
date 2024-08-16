@@ -454,29 +454,56 @@ int main()
 
 
 
+
 		{
+		char recvbuff[15];
+		int ret, nLeft, idx;
 
-			char recvbuff[15];
-			int ret, nLeft, idx;
+		nLeft = 15;
+		idx = 0;
 
-			nLeft = 15;
-			idx = 0;
-
-			while (nLeft > 0)
+		while (nLeft > 0)
+		{
+			ret = recv(connSocket, &recvbuff[idx], nLeft, 0);
+			recvbuff[14] = '\0';
+			if (ret == SOCKET_ERROR)
 			{
-				ret = recv(connSocket, &recvbuff[idx], nLeft, 0);
-				recvbuff[14] = '\0';
-				if (ret == SOCKET_ERROR)
-				{
 
-				}
-				idx += ret;
-				nLeft -= ret;
 			}
-			std::cout << "Got message from server: " <<  recvbuff << std::endl;
+			idx += ret;
+			nLeft -= ret;
+		}
+		std::cout << "Got message from server: " << recvbuff << std::endl;
+
+		std::string p1X{ "0000" }, p1Y{ "000" }, p2X{ "0000" }, p2Y{ "000" };
+		for (int i = 0; i < 4; i++)
+		{
+			p1X[i] = recvbuff[i];
+		}
+		for (int i = 0; i < 3; i++)
+		{
+			p1Y[i] = recvbuff[i+4];
+		}
+		for (int i = 0; i < 4; i++)
+		{
+			p2X[i] = recvbuff[i+7];
+		}
+		for (int i = 0; i < 3; i++)
+		{
+			p2Y[i] = recvbuff[i + 11];
 		}
 
-
+		if (gClientID == 1)
+		{
+			playerSpr.setPosition({ (float)stoi(p1X), (float)stoi(p1Y) });
+			player2Spr.setPosition({ (float)stoi(p2X), (float)stoi(p2Y) });
+		}
+		else
+		{
+			playerSpr.setPosition({ (float)stoi(p2X), (float)stoi(p2Y) });
+			player2Spr.setPosition({ (float)stoi(p1X), (float)stoi(p1Y) });
+		}
+	}
 		// window event handling
 		sf::Event e;
 		while (gWnd.pollEvent(e))
