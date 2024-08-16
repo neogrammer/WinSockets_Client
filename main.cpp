@@ -427,9 +427,16 @@ int main()
 
 	
 		{
+
+			struct combo
+			{
+				sf::Vector2f tmp1;
+				sf::Vector2f tmp2;
+			} data;
 			//wait for server to send initial data such as what this clients ID will be for this game session
 			char buffer[2];
-			int byteCount = recv(connSocket, buffer, 2, 0);
+			sf::Vector2f tmp1;
+			int byteCount = recv(connSocket, (char*)&data, sizeof(data), 0);
 			if (byteCount < 0)
 			{
 				std::cout << "Unable to receive data from server supplying the Client ID for this machine" << std::endl;
@@ -443,7 +450,11 @@ int main()
 
 				gClientID = atoi(buffer);
 			}
+			playerSpr.setPosition({ data.tmp1.x, data.tmp1.y });
+			player2Spr.setPosition({ data.tmp2.x, data.tmp2.y });
+
 		}
+	
 		// rendering of the window
 		gWnd.clear(sf::Color(47, 147, 247, 255));
 
