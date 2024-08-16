@@ -374,8 +374,8 @@ int main()
 		input(frameInputData);
 
 		unsigned long long byteCount = 0Ui64;
-		while (byteCount < sizeof(frameInputData))
-			byteCount = send(connSocket, (char*)&frameInputData, sizeof(frameInputData), 0);
+		while (byteCount < sizeof(ClientFrameInput))
+			byteCount = send(connSocket, (char*)&frameInputData, sizeof(ClientFrameInput), 0);
 	}
 	//sent
 	
@@ -439,7 +439,7 @@ int main()
 	
 			sf::Vector2f tmp1;
 
-			int byteCount = recv(connSocket, (char*)&data, sizeof(data), 0);
+			int byteCount = recv(connSocket, (char*)&data, sizeof(combo), 0);
 			if (byteCount < 0)
 			{
 				std::cout << "Unable to receive data from server supplying the Client ID for this machine" << std::endl;
@@ -469,8 +469,8 @@ int main()
 			input(frameInputData);
 
 			unsigned long long byteCount = 0Ui64;
-			while (byteCount < sizeof(frameInputData))
-				byteCount = send(connSocket, (char*)&frameInputData, sizeof(frameInputData), 0);
+			while (byteCount < sizeof(ClientFrameInput))
+				byteCount = send(connSocket, (char*)&frameInputData, sizeof(ClientFrameInput), 0);
 		}
 	}
 
