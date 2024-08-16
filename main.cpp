@@ -449,7 +449,6 @@ int main()
 			{
 				std::cout << "Data received successfully from server supplying the players Client ID for this machine" << std::endl;
 
-				gClientID = atoi(buffer);
 			}
 			playerSpr.setPosition({ data.tmp1.x, data.tmp1.y });
 			player2Spr.setPosition({ data.tmp2.x, data.tmp2.y });
