@@ -465,6 +465,7 @@ int main()
 			while (nLeft > 0)
 			{
 				ret = recv(connSocket, &recvbuff[idx], nLeft, 0);
+				recvbuff[14] = '\0';
 				if (ret == SOCKET_ERROR)
 				{
 
