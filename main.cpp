@@ -243,11 +243,11 @@ int main()
 	playerSpr.setTextureRect(animMap[currentAnim].at(index));
 	if (gClientID == 1)
 	{
-		playerSpr.setPosition({30.f,700.f});
+		playerSpr.setPosition({50.f,600.f});
 	}
 	else
 	{
-		playerSpr.setPosition({ 150.f,700.f });
+		playerSpr.setPosition({ 350.f,600.f });
 
 	}
 
@@ -334,11 +334,11 @@ int main()
 	player2Spr.setTextureRect(animMap2[currentAnim2].at(index2));
 	if (gClientID == 2)
 	{
-		player2Spr.setPosition({ 30.f,700.f });
+		player2Spr.setPosition({ 50.f,600.f });
 	}
 	else
 	{
-		player2Spr.setPosition({ 150.f,700.f });
+		player2Spr.setPosition({ 350.f,600.f });
 
 	}
 
