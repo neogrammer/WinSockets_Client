@@ -4,59 +4,62 @@
 #include <Winsock2.h>
 #include <Ws2tcpip.h>
 #include <iostream>
+#include <core/Cfg.h>
+#include <core/globals.h>
+#include <level/LayeredBackground.h>
+#include <memory>
+//struct PlayerData
+//{
+//	int xpos{};
+//	int ypos{};
+//};
+//
+//struct BallData
+//{
+//	int xpos{};
+//	int ypos{};
+//};
+//
+//struct FrameData
+//{
+//	int ypos{};
+//};
+//
+//struct WorldData
+//{
+//	int yourYPos{};
+//	int otherYPos{};
+//	int ballXPos{};
+//	int ballYPos{};
+//};
 
-struct PlayerData
-{
-	int xpos{};
-	int ypos{};
-};
 
-struct BallData
-{
-	int xpos{};
-	int ypos{};
-};
-
-struct FrameData
-{
-	int ypos{};
-};
-
-struct WorldData
-{
-	int yourYPos{};
-	int otherYPos{};
-	int ballXPos{};
-	int ballYPos{};
-};
-
-sf::RenderWindow gWnd;
-float gTime;
 float gElapsed;
 
 int gPort = 55555;
 
 int gClientID = 10;
 
-sf::Font gFont;
+//sf::Font gFont;
 
 SOCKET connSocket;
+std::unique_ptr<LayeredBackground> bg1;
 
-// paddle and ball textures
-sf::Texture gPaddleTex;
-sf::Texture gBallTex;
+//// paddle and ball textures
+//sf::Texture gPaddleTex;
+//sf::Texture gBallTex;
+//
+//
+//
+//PlayerData myData{};
+//PlayerData otherPlayerData{};
+//BallData ballData{};
+//
+//FrameData frameData{};
+//WorldData worldData{};
 
-
-
-PlayerData myData{};
-PlayerData otherPlayerData{};
-BallData ballData{};
-
-FrameData frameData{};
-WorldData worldData{};
-
-bool gUpPressed{ false };
-bool gDownPressed{ false };
+//bool gUpPressed{ false };
+//bool gDownPressed{ false };
 
 void input();
 void update();
@@ -66,6 +69,8 @@ wchar_t* stringToWChar(const std::string& str);
 
 int main()
 {
+	
+
 	std::string result;
 	std::cout << "Type in ip address of server: " << std::endl;
 	std::cin >> result;
@@ -143,7 +148,7 @@ int main()
 	// int send ( SOCKET, const char* buf //MESSAGE//, int len //Length of Message Array(individual characters)//, int flags //DEFAULT OK- pass 0//); 
     //  returns number of bytes sent, non-zero is ideal here
 
-	if (gClientID == 1)
+/*	if (gClientID == 1)
 		myData.xpos = 40;
 	else
 		myData.xpos = 1510;
@@ -167,7 +172,7 @@ int main()
 
 	frameData.ypos = 380;
 
-	// Invariants of game setup are now configured to begin play
+	*/// Invariants of game setup are now configured to begin play
 	// example of sending and receiving the objects
 	//  SENDING
 	// frameData.ypos = myData.ypos;
@@ -183,14 +188,17 @@ int main()
 	// strcpy_s(buffer, "string");  overwrites a char* like char buffer[2];
 	// if (strcmp(buffer, "STRING TO MATCH") == 0 ) { // strings are equal // }  can be < 0 or > 0
 	
-	
+	Cfg::Initialize();
+
+	wndw::CreateSFMLWindow("Networking Adventure", 1600U, 900U);
 	// setup the game window
-	gWnd.create({ 1600U,900U,32U }, "Networking", sf::Style::Default);
-	
-	// set assets
-	gFont.loadFromFile("assets/fonts/font1.ttf");
-	gPaddleTex.loadFromFile("assets/textures/paddle.png");
-	gBallTex.loadFromFile("assets/textures/ball.png");
+	//gWnd.create({ 1600U,900U,32U }, "Networking", sf::Style::Default);
+	//
+	//// set assets
+	//gFont.loadFromFile("assets/fonts/font1.ttf");
+	//gPaddleTex.loadFromFile("assets/textures/paddle.png");
+	//gBallTex.loadFromFile("assets/textures/ball.png");
+	bg1 = std::make_unique<LayeredBackground>(Cfg::textures.get((int)Cfg::Textures::BG1_1), Cfg::textures.get((int)Cfg::Textures::BG1_2), Cfg::textures.get((int)Cfg::Textures::BG1_3), Cfg::textures.get((int)Cfg::Textures::BG1_4), .25f, .5f, .75f, 1.f );
 
 	
 	// GAME LOOP
@@ -285,153 +293,153 @@ void input()
 
 void update()
 {
-	// wait for time to update before doing so
-	if (gElapsed >= (1.f / 60.f))
-	{
-		gElapsed = 0.f;
-	
-		if (gUpPressed && myData.ypos >= 20)
-		{
-			myData.ypos -= 20;
-		}
+	//// wait for time to update before doing so
+	//if (gElapsed >= (1.f / 60.f))
+	//{
+	//	gElapsed = 0.f;
+	//
+	//	if (gUpPressed && myData.ypos >= 20)
+	//	{
+	//		myData.ypos -= 20;
+	//	}
 
-		if (gDownPressed && myData.ypos <= 740)
-		{
-			myData.ypos += 20;
-		}
+	//	if (gDownPressed && myData.ypos <= 740)
+	//	{
+	//		myData.ypos += 20;
+	//	}
 
-		//send frame's new updated data
-		int sentBytes = 0;
-		char writeBuffer[4] = { '0','0','0','\0' };
-		std::string yPOS = (std::to_string(myData.ypos));
-		char strBfr[4];
-		_itoa_s(myData.ypos, strBfr, _countof(strBfr), 10);
-		size_t len = strnlen(strBfr, _countof(strBfr));
-		size_t diff = len - yPOS.length();
-		for (size_t i = 0; i < yPOS.length(); i++)
-		{
-			strBfr[i + diff] = yPOS.at(i);
-		}
-		writeBuffer[0] = strBfr[0];
-		writeBuffer[1] = strBfr[1];
-		writeBuffer[2] = strBfr[2];
-		/*if (len < 3)
-		{
-			if (len < 2)
-			{
-				if (len < 1)
-				{
-					writeBuffer[0] = '0';
-					writeBuffer[1] = '0';
-					writeBuffer[2] = '0';
-				}
-				else
-				{
-					writeBuffer[0] = '0';
-					writeBuffer[1] = '0';
-					writeBuffer[2] = strBfr[0];
-				}
-			}
-			else
-			{
-				writeBuffer[0] = '0';
-				writeBuffer[1] = strBfr[0];
-				writeBuffer[2] = strBfr[1];
-			}		
-		}
-		else
-		{
-			writeBuffer[0] = strBfr[0];
-			writeBuffer[1] = strBfr[1];
-			writeBuffer[2] = strBfr[2];
-		}*/
+	//	//send frame's new updated data
+	//	int sentBytes = 0;
+	//	char writeBuffer[4] = { '0','0','0','\0' };
+	//	std::string yPOS = (std::to_string(myData.ypos));
+	//	char strBfr[4];
+	//	_itoa_s(myData.ypos, strBfr, _countof(strBfr), 10);
+	//	size_t len = strnlen(strBfr, _countof(strBfr));
+	//	size_t diff = len - yPOS.length();
+	//	for (size_t i = 0; i < yPOS.length(); i++)
+	//	{
+	//		strBfr[i + diff] = yPOS.at(i);
+	//	}
+	//	writeBuffer[0] = strBfr[0];
+	//	writeBuffer[1] = strBfr[1];
+	//	writeBuffer[2] = strBfr[2];
+	//	/*if (len < 3)
+	//	{
+	//		if (len < 2)
+	//		{
+	//			if (len < 1)
+	//			{
+	//				writeBuffer[0] = '0';
+	//				writeBuffer[1] = '0';
+	//				writeBuffer[2] = '0';
+	//			}
+	//			else
+	//			{
+	//				writeBuffer[0] = '0';
+	//				writeBuffer[1] = '0';
+	//				writeBuffer[2] = strBfr[0];
+	//			}
+	//		}
+	//		else
+	//		{
+	//			writeBuffer[0] = '0';
+	//			writeBuffer[1] = strBfr[0];
+	//			writeBuffer[2] = strBfr[1];
+	//		}		
+	//	}
+	//	else
+	//	{
+	//		writeBuffer[0] = strBfr[0];
+	//		writeBuffer[1] = strBfr[1];
+	//		writeBuffer[2] = strBfr[2];
+	//	}*/
 
-		sentBytes = send(connSocket, writeBuffer, 4, 0);
-		if (sentBytes == SOCKET_ERROR)
-		{
-			//error
-		}
+	//	sentBytes = send(connSocket, writeBuffer, 4, 0);
+	//	if (sentBytes == SOCKET_ERROR)
+	//	{
+	//		//error
+	//	}
 
-		int readBytes = 0;
-		char readBuffer[14];
-		readBytes = recv(connSocket, readBuffer, 14, 0);
-		if (readBytes == SOCKET_ERROR)
-		{
-			//error
-		}
-		else
-		{
-			std::string tmp = "000";
-			tmp.at(0) = readBuffer[0];
-			tmp.at(1) = readBuffer[1];
-			tmp.at(2) = readBuffer[2];
+	//	int readBytes = 0;
+	//	char readBuffer[14];
+	//	readBytes = recv(connSocket, readBuffer, 14, 0);
+	//	if (readBytes == SOCKET_ERROR)
+	//	{
+	//		//error
+	//	}
+	//	else
+	//	{
+	//		std::string tmp = "000";
+	//		tmp.at(0) = readBuffer[0];
+	//		tmp.at(1) = readBuffer[1];
+	//		tmp.at(2) = readBuffer[2];
 
-			int newYPos = stoi(tmp);
-			myData.ypos = newYPos;
+	//		int newYPos = stoi(tmp);
+	//		myData.ypos = newYPos;
 
-			std::string tmp2 = "000";
-			tmp2.at(0) = readBuffer[3];
-			tmp2.at(1) = readBuffer[4];
-			tmp2.at(2) = readBuffer[5];
+	//		std::string tmp2 = "000";
+	//		tmp2.at(0) = readBuffer[3];
+	//		tmp2.at(1) = readBuffer[4];
+	//		tmp2.at(2) = readBuffer[5];
 
-			int newOtherYPos = stoi(tmp2);
-			otherPlayerData.ypos = newOtherYPos;
+	//		int newOtherYPos = stoi(tmp2);
+	//		otherPlayerData.ypos = newOtherYPos;
 
 
-			std::string tmpBallx = "0000";
-			tmpBallx.at(0) = readBuffer[6];
-			tmpBallx.at(1) = readBuffer[7];
-			tmpBallx.at(2) = readBuffer[8];
-			tmpBallx.at(3) = readBuffer[9];
+	//		std::string tmpBallx = "0000";
+	//		tmpBallx.at(0) = readBuffer[6];
+	//		tmpBallx.at(1) = readBuffer[7];
+	//		tmpBallx.at(2) = readBuffer[8];
+	//		tmpBallx.at(3) = readBuffer[9];
 
-			int newBallXPos = stoi(tmpBallx);
-			ballData.xpos = newBallXPos;
+	//		int newBallXPos = stoi(tmpBallx);
+	//		ballData.xpos = newBallXPos;
 
-			std::string tmpBally = "000";
-			tmpBally.at(0) = readBuffer[10];
-			tmpBally.at(1) = readBuffer[11];
-			tmpBally.at(2) = readBuffer[12];
+	//		std::string tmpBally = "000";
+	//		tmpBally.at(0) = readBuffer[10];
+	//		tmpBally.at(1) = readBuffer[11];
+	//		tmpBally.at(2) = readBuffer[12];
 
-			int newBallYPos = stoi(tmpBally);
-			ballData.ypos = newBallYPos;
-		}
+	//		int newBallYPos = stoi(tmpBally);
+	//		ballData.ypos = newBallYPos;
+	//	}
 
-		// data vals are updated, and can now be drawn 
-	}
+	//	// data vals are updated, and can now be drawn 
+	//}
 }
 
 void render()
 {
+	bg1->render();
+	//sf::Sprite playerSpr;
+	//playerSpr = sf::Sprite{};
+	//playerSpr.setPosition({(float)myData.xpos,(float)myData.ypos});
+	//playerSpr.setTexture(gPaddleTex);
+	//sf::Sprite otherPlayerSpr;
+	//otherPlayerSpr = sf::Sprite{};
+	//otherPlayerSpr.setPosition({ (float)otherPlayerData.xpos,(float)otherPlayerData.ypos });
+	//otherPlayerSpr.setTexture(gPaddleTex);
+	//sf::Sprite ballSpr;
+	//ballSpr = sf::Sprite{};
+	//ballSpr.setPosition({ (float)ballData.xpos,(float)ballData.ypos });
+	//ballSpr.setTexture(gBallTex);
 
-	sf::Sprite playerSpr;
-	playerSpr = sf::Sprite{};
-	playerSpr.setPosition({(float)myData.xpos,(float)myData.ypos});
-	playerSpr.setTexture(gPaddleTex);
-	sf::Sprite otherPlayerSpr;
-	otherPlayerSpr = sf::Sprite{};
-	otherPlayerSpr.setPosition({ (float)otherPlayerData.xpos,(float)otherPlayerData.ypos });
-	otherPlayerSpr.setTexture(gPaddleTex);
-	sf::Sprite ballSpr;
-	ballSpr = sf::Sprite{};
-	ballSpr.setPosition({ (float)ballData.xpos,(float)ballData.ypos });
-	ballSpr.setTexture(gBallTex);
-
-	gWnd.draw(playerSpr);
-	gWnd.draw(otherPlayerSpr);
-	gWnd.draw(ballSpr);
+	//gWnd.draw(playerSpr);
+	//gWnd.draw(otherPlayerSpr);
+	//gWnd.draw(ballSpr);
 
 
-	// HUD
-	// player data displayed
-	sf::Text playerNumTxt;
-	playerNumTxt.setFont(gFont);
-	playerNumTxt.setCharacterSize(32);
-	playerNumTxt.setFillColor(sf::Color::White);
-	std::string playerNumberStr = "Player ";
-	playerNumberStr.append(std::to_string(gClientID));
-	playerNumTxt.setString(playerNumberStr);
+	//// HUD
+	//// player data displayed
+	//sf::Text playerNumTxt;
+	//playerNumTxt.setFont(gFont);
+	//playerNumTxt.setCharacterSize(32);
+	//playerNumTxt.setFillColor(sf::Color::White);
+	//std::string playerNumberStr = "Player ";
+	//playerNumberStr.append(std::to_string(gClientID));
+	//playerNumTxt.setString(playerNumberStr);
 
-	gWnd.draw(playerNumTxt);
+	//gWnd.draw(playerNumTxt);
 
 }
 

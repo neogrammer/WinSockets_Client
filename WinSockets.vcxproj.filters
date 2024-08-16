@@ -2,6 +2,21 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\action\Action.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Cfg.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\globals.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\rec.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\level\LayeredBackground.cpp">
+      <Filter>level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="assets">
@@ -12,6 +27,33 @@
     </Filter>
     <Filter Include="assets\textures">
       <UniqueIdentifier>{104d5ff6-d25a-4bb7-b405-68621c0bb3e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core">
+      <UniqueIdentifier>{7b6f605e-b58e-4fad-a3a5-9f5121dd7784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="action">
+      <UniqueIdentifier>{9e2f396e-cb7a-4677-a28b-da5fa9ba349c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="action\tpl">
+      <UniqueIdentifier>{a71a1e0b-a658-4258-b720-d782ad5e3949}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\tpl">
+      <UniqueIdentifier>{99dc16e7-d224-4321-b461-c0a37c6717d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdParty">
+      <UniqueIdentifier>{b224475a-9240-4a30-a0a7-8833e88be232}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\textures\bgs">
+      <UniqueIdentifier>{7fcf8c6b-49e8-4bf3-9213-77ad54ddc226}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\textures\bgs\bg1">
+      <UniqueIdentifier>{21c54686-58c6-4d1f-98b5-cf84fde7e30f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="level">
+      <UniqueIdentifier>{dd73be39-88e7-43d2-8c86-2a8a76b49daf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="entities">
+      <UniqueIdentifier>{18c0b891-e8f4-4748-bc2e-95df8606b2cd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -29,5 +71,60 @@
     <Image Include="assets\textures\playerSheet.png">
       <Filter>assets\textures</Filter>
     </Image>
+    <Image Include="assets\textures\bgs\bg1\1.png">
+      <Filter>assets\textures\bgs\bg1</Filter>
+    </Image>
+    <Image Include="assets\textures\bgs\bg1\2.png">
+      <Filter>assets\textures\bgs\bg1</Filter>
+    </Image>
+    <Image Include="assets\textures\bgs\bg1\3.png">
+      <Filter>assets\textures\bgs\bg1</Filter>
+    </Image>
+    <Image Include="assets\textures\bgs\bg1\4.png">
+      <Filter>assets\textures\bgs\bg1</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\core\tpl\ResourceManager.tpl">
+      <Filter>core\tpl</Filter>
+    </None>
+    <None Include="src\action\tpl\ActionMap.tpl">
+      <Filter>action\tpl</Filter>
+    </None>
+    <None Include="src\action\tpl\ActionTarget.tpl">
+      <Filter>action\tpl</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\action\Action.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="src\action\ActionMap.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="src\action\ActionTarget.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Cfg.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\globals.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\ResourceManager.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\rec.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\3rdParty\olcUTIL_Geometry2D.h">
+      <Filter>3rdParty</Filter>
+    </ClInclude>
+    <ClInclude Include="src\level\LayeredBackground.h">
+      <Filter>level</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entities\animation.h">
+      <Filter>entities</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\sdks\sfml_64\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\AUStudent\source\repos\neogrammer\WinSockets_Client\src;C:\sdks\sfml_64\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\sdks\sfml_64\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -135,14 +135,40 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\action\Action.cpp" />
+    <ClCompile Include="src\core\Cfg.cpp" />
+    <ClCompile Include="src\core\globals.cpp" />
+    <ClCompile Include="src\core\rec.cpp" />
+    <ClCompile Include="src\level\LayeredBackground.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\font1.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\textures\ball.png" />
+    <Image Include="assets\textures\bgs\bg1\1.png" />
+    <Image Include="assets\textures\bgs\bg1\2.png" />
+    <Image Include="assets\textures\bgs\bg1\3.png" />
+    <Image Include="assets\textures\bgs\bg1\4.png" />
     <Image Include="assets\textures\paddle.png" />
     <Image Include="assets\textures\playerSheet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\action\tpl\ActionMap.tpl" />
+    <None Include="src\action\tpl\ActionTarget.tpl" />
+    <None Include="src\core\tpl\ResourceManager.tpl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\3rdParty\olcUTIL_Geometry2D.h" />
+    <ClInclude Include="src\action\Action.h" />
+    <ClInclude Include="src\action\ActionMap.h" />
+    <ClInclude Include="src\action\ActionTarget.h" />
+    <ClInclude Include="src\core\Cfg.h" />
+    <ClInclude Include="src\core\globals.h" />
+    <ClInclude Include="src\core\rec.h" />
+    <ClInclude Include="src\core\ResourceManager.h" />
+    <ClInclude Include="src\entities\animation.h" />
+    <ClInclude Include="src\level\LayeredBackground.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
