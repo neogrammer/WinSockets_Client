@@ -150,11 +150,11 @@
     <Image Include="assets\textures\bgs\bg1\2.png" />
     <Image Include="assets\textures\bgs\bg1\3.png" />
     <Image Include="assets\textures\bgs\bg1\4.png" />
-    <Image Include="assets\textures\bgs\parallax1\bgLayer1.png" />
-    <Image Include="assets\textures\bgs\parallax1\bgLayer2.png" />
-    <Image Include="assets\textures\bgs\parallax1\bgLayer3.png" />
-    <Image Include="assets\textures\bgs\parallax1\bgLayer4.png" />
     <Image Include="assets\textures\bgs\parallax1\bgLayer5.png" />
+    <Image Include="assets\textures\bgs\parallax1\bgLayer4.png" />
+    <Image Include="assets\textures\bgs\parallax1\bgLayer3.png" />
+    <Image Include="assets\textures\bgs\parallax1\bgLayer2.png" />
+    <Image Include="assets\textures\bgs\parallax1\bgLayer1.png" />
     <Image Include="assets\textures\paddle.png" />
     <Image Include="assets\textures\playerSheet2.png" />
   </ItemGroup>
