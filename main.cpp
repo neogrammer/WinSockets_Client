@@ -142,38 +142,55 @@ int main()
 		std::cout << "Client successfully connected to server!" << std::endl;
 		std::cout << "Can start sending data!" << std::endl;
 	}*/
-	{
-		char buffer[256];
-		int bytesReceived = 0;
+//	{
+		/*char buffer[256];
 		cid::CResult result = cid::CResult::C_Success;
 		while (result == cid::CResult::C_Success)
 		{
-			result = connSocket.Recv(buffer, 256, bytesReceived);
+			result = connSocket.RecvAll(buffer, 256);
 			if (result != cid::CResult::C_Success)
 				break;
 			std::cout << buffer << std::endl;
-		}
+		}*/
 
 	
-	}
+	//}
+
+	std::cout << "received input data from client1" << std::endl;
+
 	{
-		//wait for server to send initial data such as what this clients ID will be for this game session
 		char buffer[2];
-		int byteCount = recv(connSocket.GetHandle(), buffer, 2, 0);
-		if (byteCount < 0)
+		cid::CResult result = cid::CResult::C_Success;
+		result = connSocket.RecvAll(buffer, 2);
+		if (result != cid::CResult::C_Success)
 		{
-			std::cout << "Unable to receive data from server supplying the Client ID for this machine" << std::endl;
 			connSocket.Close();
 			cid::net::shutdown();
-			return 0;
+			return 1;
 		}
-		else
-		{
-			std::cout << "Data received successfully from server supplying the players Client ID for this machine" << std::endl;
-
-			gClientID = atoi(buffer);
-		}
+		std::cout << "received clientID from server" << buffer << std::endl;
+		gClientID = atoi(buffer);
 	}
+
+
+	//{
+	//	//wait for server to send initial data such as what this clients ID will be for this game session
+	//	char buffer[2];
+	//	int byteCount = recv(connSocket.GetHandle(), buffer, 2, 0);
+	//	if (byteCount < 0)
+	//	{
+	//		std::cout << "Unable to receive data from server supplying the Client ID for this machine" << std::endl;
+	//		connSocket.Close();
+	//		cid::net::shutdown();
+	//		return 0;
+	//	}
+	//	else
+	//	{
+	//		std::cout << "Data received successfully from server supplying the players Client ID for this machine" << std::endl;
+
+	//		gClientID = atoi(buffer);
+	//	}
+	//}
 
 	
 	Cfg::Initialize();
@@ -190,7 +207,42 @@ int main()
 	gElapsed = 0.f;
 	while (gWnd.isOpen())
 	{
+		std::string tmp = input();
+		char mystr[9];
+		tmp.copy(mystr, 8);
+		mystr[8] = '\0';
+
+		char sendbuf[9];
+		strcpy_s(sendbuf, mystr);
+
+		/*sf::Vector2f tmp1 = p1Pos;
+		unsigned long long byteCount1 = 0Ui64;
+		while (byteCount1 < sizeof(buffer1))
+			byteCount1 = send(clientPipeSocket.GetHandle(), (char*)&buffer1, sizeof(buffer1), 0);
+		if (byteCount1 == SOCKET_ERROR)
 		{
+			printf("Server send error %d.\n", WSAGetLastError());
+			return -1;
+		}*/
+		std::cout << "about to send to server the input data" << std::endl;
+
+		{
+			cid::CResult result = cid::CResult::C_Success;
+
+				result = connSocket.SendAll(sendbuf, 9);
+				if (result != cid::CResult::C_Success)
+				{
+					connSocket.Close();
+					cid::net::shutdown();
+					return 1;
+				}
+				std::cout << "Attempting to send chunk of data..." << std::endl;
+			
+		}
+		std::cout << "sent to server the input data" << std::endl;
+
+
+		/*{
 			std::string mystr = input();
 			const char* sendbuf = mystr.c_str();
 			int bytesSent{ 0 }, nlen{ 9 };
@@ -205,60 +257,80 @@ int main()
 				}
 				
 			}
-		}
+		}*/
 
 
 
 
-		{
-			char recvbuff[15];
-			int ret, nLeft, idx;
+		std::cout << "waiting to receive world data from server" << std::endl;
 
-			nLeft = 15;
-			idx = 0;
-
-			while (nLeft > 0)
 			{
-				ret = recv(connSocket.GetHandle(), &recvbuff[idx], nLeft, 0);
+
+				char recvbuff[15];
+				cid::CResult result = cid::CResult::C_Success;
+
+					result = connSocket.RecvAll(recvbuff, 15);
+					if (result != cid::CResult::C_Success)
+					{
+						connSocket.Close();
+						cid::net::shutdown();
+						return 1;
+					}
+			
 				recvbuff[14] = '\0';
-				if (ret == SOCKET_ERROR)
+
+
+				/*char recvbuff[15];
+				int ret, nLeft, idx;
+
+				nLeft = 15;
+				idx = 0;
+
+				while (nLeft > 0)
 				{
+					ret = recv(connSocket.GetHandle(), &recvbuff[idx], nLeft, 0);
+					recvbuff[14] = '\0';
+					if (ret == SOCKET_ERROR)
+					{
 
+					}
+					idx += ret;
+					nLeft -= ret;
+				}*/
+				std::cout << "Got message from server: " << recvbuff << std::endl;
+
+				std::string p1X{ "0000" }, p1Y{ "000" }, p2X{ "0000" }, p2Y{ "000" };
+				for (int i = 0; i < 4; i++)
+				{
+					p1X[i] = recvbuff[i];
 				}
-				idx += ret;
-				nLeft -= ret;
-			}
-			std::cout << "Got message from server: " << recvbuff << std::endl;
+				for (int i = 0; i < 3; i++)
+				{
+					p1Y[i] = recvbuff[i + 4];
+				}
+				for (int i = 0; i < 4; i++)
+				{
+					p2X[i] = recvbuff[i + 7];
+				}
+				for (int i = 0; i < 3; i++)
+				{
+					p2Y[i] = recvbuff[i + 11];
+				}
 
-			std::string p1X{ "0000" }, p1Y{ "000" }, p2X{ "0000" }, p2Y{ "000" };
-			for (int i = 0; i < 4; i++)
-			{
-				p1X[i] = recvbuff[i];
+				if (gClientID == 1)
+				{
+					playerSpr.setPosition({ (float)stoi(p1X), (float)stoi(p1Y) });
+					player2Spr.setPosition({ (float)stoi(p2X), (float)stoi(p2Y) });
+				}
+				else
+				{
+					playerSpr.setPosition({ (float)stoi(p2X), (float)stoi(p2Y) });
+					player2Spr.setPosition({ (float)stoi(p1X), (float)stoi(p1Y) });
+				}
 			}
-			for (int i = 0; i < 3; i++)
-			{
-				p1Y[i] = recvbuff[i+4];
-			}
-			for (int i = 0; i < 4; i++)
-			{
-				p2X[i] = recvbuff[i+7];
-			}
-			for (int i = 0; i < 3; i++)
-			{
-				p2Y[i] = recvbuff[i + 11];
-			}
+			std::cout << "received world data from the server" << std::endl;
 
-			if (gClientID == 1)
-			{
-				playerSpr.setPosition({ (float)stoi(p1X), (float)stoi(p1Y) });
-				player2Spr.setPosition({ (float)stoi(p2X), (float)stoi(p2Y) });
-			}
-			else
-			{
-				playerSpr.setPosition({ (float)stoi(p2X), (float)stoi(p2Y) });
-				player2Spr.setPosition({ (float)stoi(p1X), (float)stoi(p1Y) });
-			}
-		}
+		
 		// window event handling
 		sf::Event e;
 		while (gWnd.pollEvent(e))
