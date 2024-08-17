@@ -36,11 +36,11 @@ LayeredBackground::~LayeredBackground()
 
 void LayeredBackground::renderForeground()
 {
-	for (int i = 3; i < 5; i++)
+	for (int i = 4; i < 5; i++)
 	{
 		sf::Sprite spr = sf::Sprite{};
 		spr.setTexture(*bgLayers[i]);
-		spr.setPosition({ xPos[i], 900.f - spr.getTexture()->getSize().y });
+		spr.setPosition({ xPos[i], 900.f - 100.f - spr.getTexture()->getSize().y });
 
 		gWnd.draw(spr);
 	}
@@ -60,13 +60,25 @@ void LayeredBackground::render()
 	}
 	else
 	{
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			sf::Sprite spr = sf::Sprite{};
 			spr.setTexture(*bgLayers[i]);
-			spr.setPosition({ xPos[i], 900.f - spr.getTexture()->getSize().y });
+			if (i == 0)
+			{
+				spr.setPosition({ xPos[i], 0.f });
 
+			}
+			else if (i == 1)
+			{
+				spr.setPosition({ xPos[i], 100.f });
+			}
+			else
+			{
+				spr.setPosition({ xPos[i], 900.f - spr.getTexture()->getSize().y });
+			}
 			gWnd.draw(spr);
 		}
 	}
 }
+
