@@ -19,7 +19,7 @@ struct Cfg
 	static void Initialize();
 
 	// Resource Enums 
-	enum class Textures : int { BG1_1,BG1_2, BG1_3, BG1_4
+	enum class Textures : int { BG1_1,BG1_2, BG1_3, BG1_4, BG_Par1_1, BG_Par1_2, BG_Par1_3, BG_Par1_4, BG_Par1_5
 		, PlayerSheet, Count };
 	enum class Fonts : int {  Count };
 	enum class Music : int { Count };

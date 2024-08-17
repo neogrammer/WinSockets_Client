@@ -61,6 +61,8 @@ int gClientID = 10;
 
 SOCKET connSocket;
 std::unique_ptr<LayeredBackground> bg1;
+std::unique_ptr<LayeredBackground> bg2;
+
 
 //// paddle and ball textures
 //sf::Texture gPaddleTex;
@@ -410,6 +412,7 @@ int main()
 	//gPaddleTex.loadFromFile("assets/textures/paddle.png");
 	//gBallTex.loadFromFile("assets/textures/ball.png");
 	bg1 = std::make_unique<LayeredBackground>(Cfg::textures.get((int)Cfg::Textures::BG1_1), Cfg::textures.get((int)Cfg::Textures::BG1_2), Cfg::textures.get((int)Cfg::Textures::BG1_3), Cfg::textures.get((int)Cfg::Textures::BG1_4), .25f, .5f, .75f, 1.f );
+	bg2 = std::make_unique<LayeredBackground>(Cfg::textures.get((int)Cfg::Textures::BG_Par1_1), Cfg::textures.get((int)Cfg::Textures::BG_Par1_2), Cfg::textures.get((int)Cfg::Textures::BG_Par1_3), Cfg::textures.get((int)Cfg::Textures::BG_Par1_4), .25f, .5f, .75f, 1.f);
 
 	
 	// GAME LOOP
@@ -785,7 +788,7 @@ void update()
 
 void render()
 {
-	bg1->render();
+	bg2->render();
 
 	gWnd.draw(playerSpr);
 	gWnd.draw(player2Spr);

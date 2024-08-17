@@ -41,8 +41,11 @@ void Cfg::initTextures()
 	textures.load((int)Textures::BG1_3, "assets/textures/bgs/bg1/3.png");
 	textures.load((int)Textures::BG1_4, "assets/textures/bgs/bg1/4.png");
 	textures.load((int)Textures::PlayerSheet, "assets/textures/playerSheet2.png");
-
-
+	textures.load((int)Textures::BG_Par1_1, "assets/textures/bgs/parallax1/bgLayer1.png");
+	textures.load((int)Textures::BG_Par1_2, "assets/textures/bgs/parallax1/bgLayer2.png");
+	textures.load((int)Textures::BG_Par1_3, "assets/textures/bgs/parallax1/bgLayer3.png");
+	textures.load((int)Textures::BG_Par1_4, "assets/textures/bgs/parallax1/bgLayer4.png");
+	textures.load((int)Textures::BG_Par1_5, "assets/textures/bgs/parallax1/bgLayer5.png");
 
 }
 
