@@ -71,7 +71,7 @@ void LayeredBackground::render()
 			}
 			else if (i == 1)
 			{
-				spr.setPosition({ xPos[i], 100.f });
+				spr.setPosition({ xPos[i], 180.f });
 			}
 			else
 			{
