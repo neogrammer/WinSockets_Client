@@ -34,12 +34,26 @@ LayeredBackground::~LayeredBackground()
 
 void LayeredBackground::render()
 {
-	for (int i = 0; i < 4; i++)
+	if (!parallax)
 	{
-		sf::Sprite spr = sf::Sprite{};
-		spr.setTexture(*bgLayers[i]);
-		spr.setPosition({ xPos[i],0.f});
+		for (int i = 0; i < 4; i++)
+		{
+			sf::Sprite spr = sf::Sprite{};
+			spr.setTexture(*bgLayers[i]);
+			spr.setPosition({ xPos[i],0.f });
 
-		gWnd.draw(spr);
+			gWnd.draw(spr);
+		}
+	}
+	else
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			sf::Sprite spr = sf::Sprite{};
+			spr.setTexture(*bgLayers[i]);
+			spr.setPosition({ xPos[i], 900.f - spr.getTexture()->getSize().y });
+
+			gWnd.draw(spr);
+		}
 	}
 }

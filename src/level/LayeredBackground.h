@@ -7,6 +7,7 @@
 
 class LayeredBackground
 {
+	bool parallax{ true };
 	std::vector<sf::Texture*> bgLayers{};
 	std::vector<float> layerVelocityLag{};
 	std::vector<float> xPos{};
