@@ -13,7 +13,7 @@ class LayeredBackground
 	std::vector<float> xPos{};
 public:
 	LayeredBackground();
-	LayeredBackground(sf::Texture& t1, sf::Texture& t2, sf::Texture& t3, sf::Texture& t4, sf::Texture& t4, float lag1, float lag2, float lag3, float lag4, float lag5);
+	LayeredBackground(sf::Texture& t1, sf::Texture& t2, sf::Texture& t3, sf::Texture& t4, sf::Texture& t5, float lag1, float lag2, float lag3, float lag4, float lag5);
 	~LayeredBackground();
 	LayeredBackground(const LayeredBackground&) = delete;
 	LayeredBackground& operator=(const LayeredBackground&) = delete;
