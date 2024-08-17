@@ -16,12 +16,12 @@ LayeredBackground::LayeredBackground(sf::Texture& t1, sf::Texture& t2, sf::Textu
 	bgLayers.push_back(&t2);
 	bgLayers.push_back(&t3);
 	bgLayers.push_back(&t4);
-	bgLayers.push_back(&t4);
+	bgLayers.push_back(&t5);
 	layerVelocityLag.push_back(lag1);
 	layerVelocityLag.push_back(lag2);
 	layerVelocityLag.push_back(lag3);
 	layerVelocityLag.push_back(lag4);
-	layerVelocityLag.push_back(lag4);
+	layerVelocityLag.push_back(lag5);
 	xPos.push_back(0.f);
 	xPos.push_back(0.f);
 	xPos.push_back(0.f);
@@ -40,7 +40,7 @@ void LayeredBackground::renderForeground()
 	{
 		sf::Sprite spr = sf::Sprite{};
 		spr.setTexture(*bgLayers[i]);
-		spr.setPosition({ xPos[i], 900.f - 100.f - spr.getTexture()->getSize().y });
+		spr.setPosition({ xPos[i], 900.f - spr.getTexture()->getSize().y });
 
 		gWnd.draw(spr);
 	}
