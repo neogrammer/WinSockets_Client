@@ -60,7 +60,7 @@ int gClientID = 10;
 //sf::Font gFont;
 
 SOCKET connSocket;
-std::unique_ptr<LayeredBackground> bg1;
+//std::unique_ptr<LayeredBackground> bg1;
 std::unique_ptr<LayeredBackground> bg2;
 
 
@@ -411,8 +411,8 @@ int main()
 	//gFont.loadFromFile("assets/fonts/font1.ttf");
 	//gPaddleTex.loadFromFile("assets/textures/paddle.png");
 	//gBallTex.loadFromFile("assets/textures/ball.png");
-	bg1 = std::make_unique<LayeredBackground>(Cfg::textures.get((int)Cfg::Textures::BG1_1), Cfg::textures.get((int)Cfg::Textures::BG1_2), Cfg::textures.get((int)Cfg::Textures::BG1_3), Cfg::textures.get((int)Cfg::Textures::BG1_4), .25f, .5f, .75f, 1.f );
-	bg2 = std::make_unique<LayeredBackground>(Cfg::textures.get((int)Cfg::Textures::BG_Par1_1), Cfg::textures.get((int)Cfg::Textures::BG_Par1_2), Cfg::textures.get((int)Cfg::Textures::BG_Par1_3), Cfg::textures.get((int)Cfg::Textures::BG_Par1_4), .25f, .5f, .75f, 1.f);
+	//bg1 = std::make_unique<LayeredBackground>(Cfg::textures.get((int)Cfg::Textures::BG1_1), Cfg::textures.get((int)Cfg::Textures::BG1_2), Cfg::textures.get((int)Cfg::Textures::BG1_3), Cfg::textures.get((int)Cfg::Textures::BG1_4), .25f, .5f, .75f, 1.f );
+	bg2 = std::make_unique<LayeredBackground>(Cfg::textures.get((int)Cfg::Textures::BG_Par1_1), Cfg::textures.get((int)Cfg::Textures::BG_Par1_2), Cfg::textures.get((int)Cfg::Textures::BG_Par1_3), Cfg::textures.get((int)Cfg::Textures::BG_Par1_4), Cfg::textures.get((int)Cfg::Textures::BG_Par1_5), .25f, .5f, .75f, 1.f, 1.f);
 
 	
 	// GAME LOOP

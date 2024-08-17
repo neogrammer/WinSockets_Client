@@ -1,7 +1,7 @@
 #include <level/LayeredBackground.h>
 #include <SFML/Graphics/Sprite.hpp>
 #include <core/globals.h>
-LayeredBackground::LayeredBackground(sf::Texture& t1, sf::Texture& t2, sf::Texture& t3, sf::Texture& t4, float lag1, float lag2, float lag3, float lag4)
+LayeredBackground::LayeredBackground(sf::Texture& t1, sf::Texture& t2, sf::Texture& t3, sf::Texture& t4, sf::Texture& t5, float lag1, float lag2, float lag3, float lag4, float lag5)
 	: bgLayers{}
 	, layerVelocityLag{}
 	, xPos{}
@@ -9,17 +9,20 @@ LayeredBackground::LayeredBackground(sf::Texture& t1, sf::Texture& t2, sf::Textu
 	bgLayers.clear();
 	layerVelocityLag.clear();
 	xPos.clear();
-	bgLayers.reserve(4);
-	layerVelocityLag.reserve(4);
-	xPos.reserve(4);
+	bgLayers.reserve(5);
+	layerVelocityLag.reserve(5);
+	xPos.reserve(5);
 	bgLayers.push_back(&t1);
 	bgLayers.push_back(&t2);
 	bgLayers.push_back(&t3);
+	bgLayers.push_back(&t4);
 	bgLayers.push_back(&t4);
 	layerVelocityLag.push_back(lag1);
 	layerVelocityLag.push_back(lag2);
 	layerVelocityLag.push_back(lag3);
 	layerVelocityLag.push_back(lag4);
+	layerVelocityLag.push_back(lag4);
+	xPos.push_back(0.f);
 	xPos.push_back(0.f);
 	xPos.push_back(0.f);
 	xPos.push_back(0.f);
