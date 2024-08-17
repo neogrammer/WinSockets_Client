@@ -793,7 +793,7 @@ void render()
 	gWnd.draw(playerSpr);
 	gWnd.draw(player2Spr);
 
-
+	bg2->renderForeground();
 	//sf::Sprite playerSpr;
 	//playerSpr = sf::Sprite{};
 	//playerSpr.setPosition({(float)myData.xpos,(float)myData.ypos});

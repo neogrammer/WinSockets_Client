@@ -20,7 +20,8 @@ public:
 	LayeredBackground(LayeredBackground&&) = delete;
 	LayeredBackground& operator=(LayeredBackground&&) = delete;
 
-
+	void renderForeground();
+	
 	void render();
 
 };
