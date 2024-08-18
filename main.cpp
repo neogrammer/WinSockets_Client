@@ -68,19 +68,6 @@ int main()
 		std::cout << "Success on initialization of winsock!" << std::endl;
 	}
 
-	//WSADATA wsaData;
-	//int wsaerr;
-	//WORD wVersionRequested = MAKEWORD(2, 2);
-	//wsaerr = WSAStartup(wVersionRequested, &wsaData);
-	//if (wsaerr != 0)
-	//{
-	//	std::cout << "The winsock dll not found!" << std::endl;
-	//	return -1;
-	//}
-	//else
-	//{
-	//	std::cout << "The winsock dll was found!" << "\n" << "The status: " << wsaData.szSystemStatus << std::endl;
-	//}
 
 	// set up the socket configuration
 	cid::Socket connSocket{ cid::IPVersion::IPv4, INVALID_SOCKET };
@@ -109,53 +96,6 @@ int main()
 	}
 
 
-
-	//connSocket = INVALID_SOCKET;
-	//connSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	//if (connSocket == INVALID_SOCKET)
-	//{
-	//	std::cout << "Error at socket(); " << WSAGetLastError() << std::endl;
-	//	cid::net::shutdown();
-
-	//	return 1;
-	//}
-	//else
-	//{
-	//	std::cout << "socket() is OK!" << std::endl;
-	//}
-
-	// bind the specifics for the socket with its specific configuration
-	/*sockaddr_in service;
-	service.sin_family = AF_INET;
-	InetPton(AF_INET, wstr, &service.sin_addr.s_addr);
-	service.sin_port = htons(gPort);
-	if (connect(connSocket.GetHandle(), (SOCKADDR*)&service, sizeof(service)) == SOCKET_ERROR)
-	{
-		std::cout << "failed to connect to server" << WSAGetLastError() << std::endl;
-		connSocket.Close();
-		cid::net::shutdown();
-
-		return -1;
-	}
-	else
-	{
-		std::cout << "Client successfully connected to server!" << std::endl;
-		std::cout << "Can start sending data!" << std::endl;
-	}*/
-//	{
-		/*char buffer[256];
-		cid::CResult result = cid::CResult::C_Success;
-		while (result == cid::CResult::C_Success)
-		{
-			result = connSocket.RecvAll(buffer, 256);
-			if (result != cid::CResult::C_Success)
-				break;
-			std::cout << buffer << std::endl;
-		}*/
-
-	
-	//}
-
 	std::cout << "received input data from client1" << std::endl;
 
 	{
@@ -172,25 +112,6 @@ int main()
 		gClientID = atoi(buffer);
 	}
 
-
-	//{
-	//	//wait for server to send initial data such as what this clients ID will be for this game session
-	//	char buffer[2];
-	//	int byteCount = recv(connSocket.GetHandle(), buffer, 2, 0);
-	//	if (byteCount < 0)
-	//	{
-	//		std::cout << "Unable to receive data from server supplying the Client ID for this machine" << std::endl;
-	//		connSocket.Close();
-	//		cid::net::shutdown();
-	//		return 0;
-	//	}
-	//	else
-	//	{
-	//		std::cout << "Data received successfully from server supplying the players Client ID for this machine" << std::endl;
-
-	//		gClientID = atoi(buffer);
-	//	}
-	//}
 
 	
 	Cfg::Initialize();
@@ -215,15 +136,6 @@ int main()
 		char sendbuf[9];
 		strcpy_s(sendbuf, mystr);
 
-		/*sf::Vector2f tmp1 = p1Pos;
-		unsigned long long byteCount1 = 0Ui64;
-		while (byteCount1 < sizeof(buffer1))
-			byteCount1 = send(clientPipeSocket.GetHandle(), (char*)&buffer1, sizeof(buffer1), 0);
-		if (byteCount1 == SOCKET_ERROR)
-		{
-			printf("Server send error %d.\n", WSAGetLastError());
-			return -1;
-		}*/
 		std::cout << "about to send to server the input data" << std::endl;
 
 		{
@@ -242,22 +154,6 @@ int main()
 		std::cout << "sent to server the input data" << std::endl;
 
 
-		/*{
-			std::string mystr = input();
-			const char* sendbuf = mystr.c_str();
-			int bytesSent{ 0 }, nlen{ 9 };
-
-			while (bytesSent < 9)
-			{
-				bytesSent = send(connSocket.GetHandle(), const_cast<char*>(sendbuf), 9, 0);
-
-				if (bytesSent == SOCKET_ERROR)
-				{
-					std::cout << "Client: send failed" << WSAGetLastError() << std::endl;
-				}
-				
-			}
-		}*/
 
 
 
@@ -280,23 +176,7 @@ int main()
 				recvbuff[14] = '\0';
 
 
-				/*char recvbuff[15];
-				int ret, nLeft, idx;
-
-				nLeft = 15;
-				idx = 0;
-
-				while (nLeft > 0)
-				{
-					ret = recv(connSocket.GetHandle(), &recvbuff[idx], nLeft, 0);
-					recvbuff[14] = '\0';
-					if (ret == SOCKET_ERROR)
-					{
-
-					}
-					idx += ret;
-					nLeft -= ret;
-				}*/
+				
 				std::cout << "Got message from server: " << recvbuff << std::endl;
 
 				std::string p1X{ "0000" }, p1Y{ "000" }, p2X{ "0000" }, p2Y{ "000" };
@@ -358,7 +238,7 @@ int main()
 
 
 
-	// Clean up program and exit
+
 
 	//close any open sockets
 	if (connSocket.GetHandle() != INVALID_SOCKET)
@@ -416,166 +296,10 @@ std::string input()
 	return s;
 }
 
-	/*if (gClientID == 1)
-	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		{
-			gUpPressed = true;
-		}
-		else
-		{
-			gUpPressed = false;
-		}
-		
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		{
-			gDownPressed = true;
-		}
-		else
-		{
-			gDownPressed = false;
-		}
-	}
-
-	if (gClientID == 2)
-	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		{
-			gUpPressed = true;
-		}
-		else
-		{
-			gUpPressed = false;
-		}
-		
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		{
-			gDownPressed = true;
-		}
-		else
-		{
-			gDownPressed = false;
-		}
-	}*/
-//}
-
 void update()
 {
 }
-	//// wait for time to update before doing so
-	//if (gElapsed >= (1.f / 60.f))
-	//{
-	//	gElapsed = 0.f;
-	//
-	//	if (gUpPressed && myData.ypos >= 20)
-	//	{
-	//		myData.ypos -= 20;
-	//	}
 
-	//	if (gDownPressed && myData.ypos <= 740)
-	//	{
-	//		myData.ypos += 20;
-	//	}
-
-	//	//send frame's new updated data
-	//	int sentBytes = 0;
-	//	char writeBuffer[4] = { '0','0','0','\0' };
-	//	std::string yPOS = (std::to_string(myData.ypos));
-	//	char strBfr[4];
-	//	_itoa_s(myData.ypos, strBfr, _countof(strBfr), 10);
-	//	size_t len = strnlen(strBfr, _countof(strBfr));
-	//	size_t diff = len - yPOS.length();
-	//	for (size_t i = 0; i < yPOS.length(); i++)
-	//	{
-	//		strBfr[i + diff] = yPOS.at(i);
-	//	}
-	//	writeBuffer[0] = strBfr[0];
-	//	writeBuffer[1] = strBfr[1];
-	//	writeBuffer[2] = strBfr[2];
-	//	/*if (len < 3)
-	//	{
-	//		if (len < 2)
-	//		{
-	//			if (len < 1)
-	//			{
-	//				writeBuffer[0] = '0';
-	//				writeBuffer[1] = '0';
-	//				writeBuffer[2] = '0';
-	//			}
-	//			else
-	//			{
-	//				writeBuffer[0] = '0';
-	//				writeBuffer[1] = '0';
-	//				writeBuffer[2] = strBfr[0];
-	//			}
-	//		}
-	//		else
-	//		{
-	//			writeBuffer[0] = '0';
-	//			writeBuffer[1] = strBfr[0];
-	//			writeBuffer[2] = strBfr[1];
-	//		}		
-	//	}
-	//	else
-	//	{
-	//		writeBuffer[0] = strBfr[0];
-	//		writeBuffer[1] = strBfr[1];
-	//		writeBuffer[2] = strBfr[2];
-	//	}*/
-
-	//	sentBytes = send(connSocket, writeBuffer, 4, 0);
-	//	if (sentBytes == SOCKET_ERROR)
-	//	{
-	//		//error
-	//	}
-
-	//	int readBytes = 0;
-	//	char readBuffer[14];
-	//	readBytes = recv(connSocket, readBuffer, 14, 0);
-	//	if (readBytes == SOCKET_ERROR)
-	//	{
-	//		//error
-	//	}
-	//	else
-	//	{
-	//		std::string tmp = "000";
-	//		tmp.at(0) = readBuffer[0];
-	//		tmp.at(1) = readBuffer[1];
-	//		tmp.at(2) = readBuffer[2];
-
-	//		int newYPos = stoi(tmp);
-	//		myData.ypos = newYPos;
-
-	//		std::string tmp2 = "000";
-	//		tmp2.at(0) = readBuffer[3];
-	//		tmp2.at(1) = readBuffer[4];
-	//		tmp2.at(2) = readBuffer[5];
-
-	//		int newOtherYPos = stoi(tmp2);
-	//		otherPlayerData.ypos = newOtherYPos;
-
-
-	//		std::string tmpBallx = "0000";
-	//		tmpBallx.at(0) = readBuffer[6];
-	//		tmpBallx.at(1) = readBuffer[7];
-	//		tmpBallx.at(2) = readBuffer[8];
-	//		tmpBallx.at(3) = readBuffer[9];
-
-	//		int newBallXPos = stoi(tmpBallx);
-	//		ballData.xpos = newBallXPos;
-
-	//		std::string tmpBally = "000";
-	//		tmpBally.at(0) = readBuffer[10];
-	//		tmpBally.at(1) = readBuffer[11];
-	//		tmpBally.at(2) = readBuffer[12];
-
-	//		int newBallYPos = stoi(tmpBally);
-	//		ballData.ypos = newBallYPos;
-	//	}
-
-	//	// data vals are updated, and can now be drawn 
-	//}
-//}
 
 void render()
 {
@@ -585,35 +309,7 @@ void render()
 	gWnd.draw(player2Spr);
 
 	bg2->renderForeground();
-	//sf::Sprite playerSpr;
-	//playerSpr = sf::Sprite{};
-	//playerSpr.setPosition({(float)myData.xpos,(float)myData.ypos});
-	//playerSpr.setTexture(gPaddleTex);
-	//sf::Sprite otherPlayerSpr;
-	//otherPlayerSpr = sf::Sprite{};
-	//otherPlayerSpr.setPosition({ (float)otherPlayerData.xpos,(float)otherPlayerData.ypos });
-	//otherPlayerSpr.setTexture(gPaddleTex);
-	//sf::Sprite ballSpr;
-	//ballSpr = sf::Sprite{};
-	//ballSpr.setPosition({ (float)ballData.xpos,(float)ballData.ypos });
-	//ballSpr.setTexture(gBallTex);
-
-	//gWnd.draw(playerSpr);
-	//gWnd.draw(otherPlayerSpr);
-	//gWnd.draw(ballSpr);
-
-
-	//// HUD
-	//// player data displayed
-	//sf::Text playerNumTxt;
-	//playerNumTxt.setFont(gFont);
-	//playerNumTxt.setCharacterSize(32);
-	//playerNumTxt.setFillColor(sf::Color::White);
-	//std::string playerNumberStr = "Player ";
-	//playerNumberStr.append(std::to_string(gClientID));
-	//playerNumTxt.setString(playerNumberStr);
-
-	//gWnd.draw(playerNumTxt);
+	
 
 }
 
